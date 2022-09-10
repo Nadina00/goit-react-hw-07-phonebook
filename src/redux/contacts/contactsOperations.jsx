@@ -32,7 +32,7 @@ export const fetchContactsList = createAsyncThunk(
   async() => {
     try{
      const res = await contactsAPI.fetchContacts()
-     console.log(res)
+     console.dir(res)
      return res
     } catch (error){
       console.error(error);

@@ -12,13 +12,13 @@ export function App() {
   const dispatch = useDispatch();
 
   const filterCont = useSelector(state => state.contacts.filter);
- 
-  const itemContacts = useSelector(state => state.contacts.items)
-  console.log(itemContacts)
+  
       
   useEffect(()=> {
     dispatch(fetchContactsList())
   }, [dispatch])
+
+  const itemContacts = useSelector(state => state.contacts.items)
   
   console.log(fetchContactsList())
 
@@ -44,8 +44,7 @@ export function App() {
   const getVisibleContacts = itemContacts.filter(contact => 
     contact.name.toString().toLowerCase().includes(filterCont.toLowerCase())
   );
- console.log(getVisibleContacts)
-   
+    
   return (
     <div>
       <h1>Phonebook</h1>
@@ -53,7 +52,7 @@ export function App() {
       <h2>Contacts</h2>
       <ul>
         <ContactList
-          contacts={[getVisibleContacts]}
+          contacts={getVisibleContacts}
           onLeaveFeedback={handleDelete}
         />
       </ul>
