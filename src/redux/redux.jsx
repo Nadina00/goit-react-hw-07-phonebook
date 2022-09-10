@@ -1,28 +1,27 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import { createReducer } from "@reduxjs/toolkit";
-import { fetchContacts } from "service/contactsAPI";
-import {fetchContactsRequest, fetchContactsSuccess, fetchContactsError, addContactsRequest, addContactsSuccess, addContactsError, delContactsRequest, delContactsSuccess, delContactsError, delItem, changeFilter}  from './action';
+import {  delContactsRequest, delContactsSuccess, delContactsError,  changeFilter}  from './action';
 import {fetchContactsList, addContactsList} from './contacts/contactsOperations'
 
-const itemsReducer = createReducer([{ id: 'id-1', name: 'Rosie Simpson', phone: '459-12-56' }],{ 
-    [fetchContactsSuccess]: (state, action) => action.payload,
-    [addContactsSuccess]: (state, { payload }) => [...state, payload],
+const itemsReducer = createReducer([{ id: 'id-1', name: 'Rosie Simpson', phone: '459-12-56' }, { "name":"love","phone":"555-22-22","id":"30" },{ id: 'id-3', name: 'Rosie Simpson', phone: '459-12-56' }],{ 
+    [fetchContactsList.fulfilled]: (state, action) => action.payload,
+    [addContactsList.fulfilled]: (state, { payload }) => [...state, payload],
     [delContactsSuccess]: (state, { payload }) =>
   state.filter(contact => {
         return contact.id !== payload;
   }),
   })
-  console.log(itemsReducer)
+  console.log(fetchContactsList())
   
 
 const isLoadingReduser = createReducer(false, {
-    [fetchContactsRequest]: ()=> true,
-    [fetchContactsSuccess]: ()=> false,
-    [fetchContactsError]: ()=> false,
+    [fetchContactsList.pending]: ()=> true,
+    [fetchContactsList.fulfilled]: ()=> false,
+    [fetchContactsList.error]: ()=> false,
 
-    [addContactsRequest]: ()=> true,
-    [addContactsSuccess]: ()=> false,
-    [addContactsError]: ()=> false,
+    [addContactsList.pending]: ()=> true,
+    [addContactsList.fulfilled]: ()=> false,
+    [addContactsList.error]: ()=> false,
 
     [delContactsRequest]: ()=> true,
     [delContactsSuccess]: ()=> false,
@@ -31,8 +30,8 @@ const isLoadingReduser = createReducer(false, {
 })
 
 const errorReduser = createReducer(null, {
-  [fetchContactsRequest]: ()=> null,
-  [fetchContactsError]: (state, action)=> action.payload
+  [fetchContactsList.pending]: ()=> null,
+  [fetchContactsList.error]: (state, action)=> action.payload
 })
 
 

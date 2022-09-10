@@ -3,11 +3,9 @@ import { ContactList } from 'components/ContactList/ContactList';
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { Filter } from 'components/Filter/Filter';
 import { useSelector, useDispatch  } from "react-redux";
-import { addContactsList, delContactsList } from '../redux/contacts/contactsOperations';
-import {addContactsRequest, addContactsSuccess, addContactsError, delItem, changeFilter}  from 'redux/action';
+import { addContactsList, delContactsList, fetchContactsList } from '../redux/contacts/contactsOperations';
+import {changeFilter}  from 'redux/action';
 import PropTypes from 'prop-types';
-
-
 
 export function App() {
      
@@ -15,17 +13,21 @@ export function App() {
 
   const filterCont = useSelector(state => state.contacts.filter);
  
-  const itemContact = useSelector(state => state.contacts.items)
+  const itemContacts = useSelector(state => state.contacts.items)
+  console.log(itemContacts)
       
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(itemContact));
-  }, [itemContact]);
+  useEffect(()=> {
+    dispatch(fetchContactsList())
+  }, [dispatch])
+  
+  console.log(fetchContactsList())
 
-  const addContactItem = ({name, number}) => {
+  const addContactItem = ({name, phone}) => {
+    console.log(phone)
     const searchName = name.toLowerCase();
-    itemContact.find(contact => contact.name.toLowerCase() === searchName)
+    itemContacts.find(contact => contact.name.toLowerCase() === searchName)
       ? alert('contact is already in contacts')
-      : dispatch(addContactsList(name, number));
+      : dispatch(addContactsList({name, phone}));
   };
 
   const handleDelete = id => {
@@ -39,10 +41,10 @@ export function App() {
    
   };
 
-
-  const getVisibleContacts = itemContact.filter(contact =>
-    contact.name.toLowerCase().includes(filterCont.toLowerCase())
+  const getVisibleContacts = itemContacts.filter(contact => 
+    contact.name.toString().toLowerCase().includes(filterCont.toLowerCase())
   );
+ console.log(getVisibleContacts)
    
   return (
     <div>
@@ -51,7 +53,7 @@ export function App() {
       <h2>Contacts</h2>
       <ul>
         <ContactList
-          contacts={getVisibleContacts}
+          contacts={[getVisibleContacts]}
           onLeaveFeedback={handleDelete}
         />
       </ul>
@@ -59,7 +61,6 @@ export function App() {
     </div>
   );
 }
-
 
 
 App.protoType = {
