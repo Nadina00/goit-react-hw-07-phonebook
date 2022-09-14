@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
+import { nanoid } from 'nanoid';
 import { Input, Btn } from './ContactForm.styled';
-import {toast} from 'react-hot-toast'
-
 
 export function ContactForm({ onSubmit }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [id, setId] = useState('');
 
-  
   const handleChangeName = evt => {
     setName(evt.target.value);
     setId(nanoid());
@@ -24,7 +21,6 @@ export function ContactForm({ onSubmit }) {
     evt.preventDefault();
     onSubmit({ name, number, id });
     reset();
-    toast.success ('Сontact created!')
   };
 
   const reset = () => {
@@ -59,7 +55,9 @@ export function ContactForm({ onSubmit }) {
           required
         />
       </label>
-      <Btn type="submit">Add contact</Btn>
+      <Btn type="submit" disabled={!(name && number)}>
+        Add contact
+      </Btn>
     </form>
   );
 }
