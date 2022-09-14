@@ -2,14 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { Input, Btn } from './ContactForm.styled';
-<<<<<<< HEAD
-=======
-
-
->>>>>>> f3da960e5c7eb13a579cfac1b5606721d22ab937
 
 export function ContactForm({ onSubmit }) {
-
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [id, setId] = useState('');
@@ -27,10 +21,6 @@ export function ContactForm({ onSubmit }) {
     evt.preventDefault();
     onSubmit({ name, number, id });
     reset();
-<<<<<<< HEAD
-=======
-   
->>>>>>> f3da960e5c7eb13a579cfac1b5606721d22ab937
   };
 
   const reset = () => {
@@ -65,14 +55,9 @@ export function ContactForm({ onSubmit }) {
           required
         />
       </label>
-<<<<<<< HEAD
       <Btn type="submit" disabled={!(name && number)}>
         Add contact
       </Btn>
-=======
-      <Btn type="submit" disabled={!(name && number)}> 
-       Add contact</Btn>
->>>>>>> f3da960e5c7eb13a579cfac1b5606721d22ab937
     </form>
   );
 }
